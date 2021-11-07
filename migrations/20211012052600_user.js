@@ -1,4 +1,4 @@
-
+const moment = require('moment');
 exports.up = function(knex) {
   return knex.schema.createTable('USERS_TBL', function(table) {
     table.string('userId').primary().defaultTo(new Date().valueOf());
@@ -11,7 +11,7 @@ exports.up = function(knex) {
     table.string('address');
     table.string('contactNum');
     table.string('civilStatus');
-    table.string('birthDate').defaultTo(knex.fn.now());
+    table.date('birthDate').defaultTo(moment().format('YYYY-MM-DD'));
     table.integer('status').defaultTo(1);
     table.timestamp('created_at').defaultTo(knex.fn.now());
     table.timestamp('updated_at').defaultTo(knex.fn.now());

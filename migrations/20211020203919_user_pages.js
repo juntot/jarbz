@@ -2,7 +2,8 @@
 exports.up = function(knex) {
   return knex.schema.createTable('USERPAGE_TBL', function(table) {
     table.string('userId').primary();
-    table.jsonb('pages').defaultTo({});
+    // table.jsonb('pages').defaultTo({});
+    table.longtext('pages').defaultTo({});
   });
 };
 
