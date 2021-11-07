@@ -113,9 +113,9 @@ for (const paths of pathController) {
 //     console.log(res)
 // });
 
-// app.use('/test', (req, res)=>{
-//     res.send('okay');
-// })
+app.use('/test', (req, res)=>{
+    res.send('okay');
+})
 
 
 app.post('/api/uploads', async (req, res, next) => {
