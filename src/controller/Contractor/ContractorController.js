@@ -7,12 +7,10 @@ const ContractorService = require('./ContractorService');
 const getContractorEval = async (req, res) =>{
     const from = req.params.from || moment(from).format('YYYY-MM-DD 00:00:00');
     const end = req.params.end || moment(from).format('YYYY-MM-DD 23:59:59');
-    const result = await ContractorDocSchema.find({
-      dateCreated: {
-        $gte: new Date(from),
-        $lt: new Date(end) // +1 day
-       }
-    });
+    const result = await ContractorService.getContractorEval(
+        new Date(from),
+        new Date(end) // +1 day
+    );
     res.status(200).json(result);
 }
 

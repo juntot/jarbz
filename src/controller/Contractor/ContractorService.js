@@ -6,7 +6,24 @@ class ContractorService extends BaseRepository{
   }
 
   
+  // get contractors for evaultion
+  async getContractorEval(from, to){
+    console.log(APP, '[getContractorEval]');
 
+    const result = await this._knex(this._table)
+      .innerJoin('USERS_TBL', 'USERS_TBL.userId', `${this._table}.userId_`)
+      .whereBetween(`${this._table}.created_at`, [from, to])
+      .andWhere('status', 1)
+      .select();
+    
+    
+    return result.map(res=>{
+      res['team'] = JSON.parse(res.team);
+      res['documents'] = JSON.parse(res.documents);
+      return res;
+    })
+                          
+  }
 
   // insert or update contractor record
   async insertOrUpdate(body, userId){

@@ -51,8 +51,8 @@ const app = express();
 app.use(cors());
 app.use(cookieParser());
 app.disable('x-powered-by');
-// app.use(multerMid.single('file'));
-app.use(FTP.uploadFile.single('file'))
+app.use(multerMid.single('file'));
+// app.use(FTP.uploadFile.single('file'))
 
 
 app.use(express.urlencoded({ extended: true }));
@@ -118,12 +118,13 @@ app.use('/test', (req, res)=>{
 })
 
 
-app.post('/api/uploads', async (req, res, next) => {
-
+app.post('/api/upload', async (req, res, next) => {
+  console.log('tae')
     try {
         
         const myFile = req.file
-        const imageUrl = await GC.uploadFile(myFile)
+        // const imageUrl = await GC.uploadFile(myFile)
+        const imageUrl = await FTP.uploadJSFTP(myFile)
         res
           .status(200)
           .json({
@@ -131,6 +132,26 @@ app.post('/api/uploads', async (req, res, next) => {
             data: imageUrl
           })
       } catch (error) {
+        console.log(error);
+        next(error)
+      }
+});
+
+app.get('/api/mkdir', async (req, res, next) => {
+  console.log('tae')
+    try {
+        
+        const myFile = req.file
+        // const imageUrl = await GC.uploadFile(myFile)
+        const imageUrl = await FTP.makeDIRJSFTP('myFile')
+        res
+          .status(200)
+          .json({
+            message: "Upload was successful",
+            data: imageUrl
+          })
+      } catch (error) {
+        console.log(error);
         next(error)
       }
 });
