@@ -1,0 +1,14 @@
+runtime: nodejs14
+
+env_variables:
+  MYSQL_HOST: /cloudsql/melodic-crane-325317:asia-northeast3:mysql4th
+  MYSQL_DB: jarbz4000
+  MYSQL_USER: root
+  MYSQL_PASS: a
+  BUCKET_NAME: "example-gcs-bucket"
+
+
+handlers:
+- url: /.*
+  secure: always
+  script: auto

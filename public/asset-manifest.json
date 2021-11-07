@@ -1,0 +1,24 @@
+{
+  "files": {
+    "main.css": "/static/css/main.c7765d58.chunk.css",
+    "main.js": "/static/js/main.93b7130c.chunk.js",
+    "main.js.map": "/static/js/main.93b7130c.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.40904f8e.js",
+    "runtime-main.js.map": "/static/js/runtime-main.40904f8e.js.map",
+    "static/js/2.6fdd5710.chunk.js": "/static/js/2.6fdd5710.chunk.js",
+    "static/js/2.6fdd5710.chunk.js.map": "/static/js/2.6fdd5710.chunk.js.map",
+    "static/js/3.a83d83c5.chunk.js": "/static/js/3.a83d83c5.chunk.js",
+    "static/js/3.a83d83c5.chunk.js.map": "/static/js/3.a83d83c5.chunk.js.map",
+    "index.html": "/index.html",
+    "static/css/main.c7765d58.chunk.css.map": "/static/css/main.c7765d58.chunk.css.map",
+    "static/js/2.6fdd5710.chunk.js.LICENSE.txt": "/static/js/2.6fdd5710.chunk.js.LICENSE.txt",
+    "static/media/JarbLogo.35268314.png": "/static/media/JarbLogo.35268314.png",
+    "static/media/icdi_mini_logo.ac2e8c48.png": "/static/media/icdi_mini_logo.ac2e8c48.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.40904f8e.js",
+    "static/js/2.6fdd5710.chunk.js",
+    "static/css/main.c7765d58.chunk.css",
+    "static/js/main.93b7130c.chunk.js"
+  ]
+}

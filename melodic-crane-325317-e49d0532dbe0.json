@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "melodic-crane-325317",
+  "private_key_id": "e49d0532dbe082d869a94882415d29796d94db54",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCwklEykALG6SCL\n0bxbQCrOshpY3FE99HsbYtvovK+DwX5Wdj7wGk6DVIBKDdrlWoSdNWgWlMP1YVYR\nMbdZscBQj3+RjLxb9xfeZA2gfVwyCLIDsuvFRNoPBVJrJde3cSXnBF0Kc5FYKEu0\ngY2fAt9iCWuDvZCcEcP6i62frQ5R6pHuiHaf0eQ7ajeOTIGZeaMuqw8cRSrZ9DpO\nftuvjeg+klRpjT7snZ9EnXFXRFozPpgEJ4ejgDX1loBAcxZCSQgHc44x9SnrEngg\n318UejLRjOLZeqJOVshMW9FzBRhosI62KqZ3qMJO6Xsar3+P2Wg8S42EDWjqd/Yg\n0Xoal9XPAgMBAAECggEAMDSB/m/akjtrK0DjT3ZBOZTeJIxhkayBP4TJzMxWjn3w\n4+H8ZMiJzsjvDUijDiKcOd8uv5t1tDQSrzcHe3FPs665gR8O/XyEA68FGV+gH/jH\nwMLEI2MctSUazy3Rqr81PdCvJf9PGuZFZM5Jv7OlELrJo3nJVRJ0kp43lHRGiI4x\nGN9QVUt+YptprN/+SjCXutPLGisayaSWuDP9KyR47xZAXmiSvoWXniBafV9eRYtB\noi5oCuPVCNJ2JeWMt7d3Hy/Jh4Yg2AJVJvQqmZEqSZuDHQlDMYdyT++VAuHiL7E1\nd+c5xkDGuyN93mvH57r/KNlmjJMIDN1JU4RaYtOYgQKBgQDpaEegCqWlBtx9FG5W\ntWkPBk+NP36HVA0EdeUbhVs5sSb7xthLMnDTThqc2aGN9fompYiH1bll+/qjRoOL\nAqZts40RwHqwPt+4UfWcJK1BXb8Ue9oGzWY1CtR8jCG/gYeUQi3UIgg1PugAsDa2\nSyd+BdL+Idicv9JVBxI94PRWcQKBgQDBqayW390KwB4Qb1AvqsqOYq8YlYwiOYHK\nH6Ty0+zqIzU2WA/9/BoNGOh3PBQQymFbXzFeGqQwHawhw68QH7JqYukqcHQAtdM2\nQrt+3NwrRkdMyLQez9NGSZI/3MYWFyEe84xktqgXc47ifnrBjImGWDrfTxFrRhlv\no/Be3MeQPwKBgF20nuTSwXPCkGyq8i1fgYElsHRtpFeiV+ONjWCCJoC/7X2xdA6k\nfoVm2upTuTdsJHS1il22YUtfYV2Bprf9ZWGvbxhMZTUy2NCAHxID64bNozQPERYg\nCkOLSImEHNxsnUjZVNrQmuj9i1kTZbPD8mP25KFgZz1vCXtXbmxnTtERAoGBAL3k\nZqPlzDMPYCtTSngC6uyknPXpJWglpTsQvkeQP9zxOusXfE7Z1J2FD+RiV3aDSuUy\nOREB5H59idvtqYmQ2vvwEpsXetd7cifhVUG2xHf2SFFk9yDDPXHNEAdorh7Y/RQB\nUWcrpzSfjbpOtIV2DR9bAhcWy4i5SpWqVTZfG5s3AoGAMrU9JD0VGbmb7pbipjlI\nc4kxfhPjzgrJumkoW2C/S9f3MUDtX5ussqPwNIBE7dzCDux14i2OMKRKa/zo+s2e\njUGtwWdnKowvlLvY5Qk1MU7MskxEOcRktztMTpzOYXqo8/sl8rjk39yRrEPA8+Ep\nL67UGWPqjVUq/xoQ4K/f/4g=\n-----END PRIVATE KEY-----\n",
+  "client_email": "service-account-jarbz@melodic-crane-325317.iam.gserviceaccount.com",
+  "client_id": "114422670211275247303",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/service-account-jarbz%40melodic-crane-325317.iam.gserviceaccount.com"
+}
