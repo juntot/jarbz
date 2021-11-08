@@ -39,8 +39,7 @@ const addDocuments = async (req, res) => {
   try {
       const file = req.file
       // const imageUrl = await GC.uploadFile(file)
-      
-      const imageUrl = 'await GC.uploadFile(file)';
+      const imageUrl = await FTP.uploadJSFTP(file);
       // udpate user schema documents
       // await ContractorDocSchema.findOneAndUpdate({_iduser: id},{
       //         ['documents.'+req.body.name] : imageUrl

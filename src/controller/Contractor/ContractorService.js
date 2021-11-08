@@ -25,6 +25,22 @@ class ContractorService extends BaseRepository{
                           
   }
 
+  
+  // insert or update contractor docs
+  async insertOrUpdateDocs(body, userId) {
+    console.log(APP, '[insertOrUpdateDocs]');
+
+    body['userId_'] = userId;
+    body['team'] = JSON.stringify(body.team);
+    body['documents'] = JSON.stringify(body.documents);
+
+    const insert = await this._knex(this._table).insert(body).toString();
+    const update = await this._knex(this._table).update(body).toString().replace(/^update(.*?)set\s/gi, '');
+    return await this._knex
+      .raw(`${insert} ON DUPLICATE KEY UPDATE ${update}`);
+  }
+
+
   // insert or update contractor record
   async insertOrUpdate(body, userId){
     console.log(APP, '[insertOrUpdate]');

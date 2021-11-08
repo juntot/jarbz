@@ -12,7 +12,7 @@ const uploadFile = multer({
     ftp: {
       host: 'ftp.4th-jarb.com',
       // secure: true, // enables FTPS/FTP with TLS
-      user: 'icdi@icdi.4th-jarb.com',
+      user: 'icdi@4th-jarb.com',
       password: 'CI!D#qVaAc'
     }
   })
@@ -20,32 +20,42 @@ const uploadFile = multer({
 
 
 // JSFTP ==================================================
-const Ftp = new jsftp({
+const ftpconn = new jsftp({
   host: 'ftp.4th-jarb.com',
-  user: 'icdi@icdi.4th-jarb.com',
+  user: 'icdi@4th-jarb.com',
   pass: 'CI!D#qVaAc', // defaults to "@anonymous"
   port: 21, // defaults to 21
 });
+
+ftpconn.on('error', function(err){
+  if(err) {
+    // return err;   
+    console.log(err)
+  }
+})
+
+ftpconn.on('data', function(data) {
+   console.log('The provided ftp location is valid');
+   // do stuff here...
+})
 
 const uploadJSFTP = async (file) => {
   const { originalname, buffer } = file;
 
   console.log(file, originalname);
-  Ftp.put(buffer, new Date().valueOf()+'.'+originalname.split(".").pop(), err => {
-    if (!err) {
-      
+  ftpconn.put(buffer, new Date().valueOf()+'.'+originalname.split(".").pop(), err => {
+    if (!err) {      
       console.log("File transferred successfully!");
+      return `https://4th-jarb.com/icdi/${new Date().valueOf()+'.'+originalname.split(".").pop()}`;
     }
     else{
-      console.log("ERROR UPLOADING FILE");
+      throw err;
     }
-
-    return file;
   });
 }
 
 const makeDIRJSFTP = async (dirname) => {
-  Ftp.raw("mkd", dirname, (err, data) => {
+  ftpconn.raw("mkd", dirname, (err, data) => {
     if (err) {
       throw err;
     }
@@ -56,7 +66,7 @@ const makeDIRJSFTP = async (dirname) => {
 }
 
 const delDIRJSFTP = async (dirname) => {
-  Ftp.raw("RMD", dirname, (err, data) => {
+  ftpconn.raw("RMD", dirname, (err, data) => {
     if (err) {
       throw err;
     }
