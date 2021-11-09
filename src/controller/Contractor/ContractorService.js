@@ -48,7 +48,8 @@ class ContractorService extends BaseRepository{
     // console.log(this._knex(this._table).insert('body').toString()+' ON DUPLICATE KEY ');
     // console.log(this._knex(this._table).update('body').toString().replace(/^update(.*?)set\s/gi, ''))
     body['userId_'] = userId;
-    body['team'] = JSON.stringify(body.team);
+    body['team'] = JSON.stringify(body.team || []);
+    body['documents'] = JSON.stringify(body.documents || {});
     // try {
     //   return this._knex.transaction(async trx=>{
     //     const insert = await trx(this._table).insert(body).toString();

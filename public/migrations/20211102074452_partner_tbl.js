@@ -4,8 +4,8 @@ exports.up = function(knex) {
     // table.jsonb('documents').defaultTo({});
     // table.jsonb('team').defaultTo([]);
     
-    table.longtext('documents').defaultTo({});
-    table.longtext('team').defaultTo([]);
+    table.longtext('documents').defaultTo('{}');
+    table.longtext('team').defaultTo('[]');
 
     table.timestamp('created_at').defaultTo(knex.fn.now());
     table.timestamp('updated_at').defaultTo(knex.fn.now());

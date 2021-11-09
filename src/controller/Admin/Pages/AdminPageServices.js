@@ -84,18 +84,53 @@ class AdminPageServices extends BaseRepository{
            * 2 SAQ FILES
            */
           console.log([1, 2].includes(page.id),' ---- ',activePage[page.id], page.id)
-          if([1, 2, 3].includes(page.id)) {
+          // MAIN AUDIT
+          if([4].includes(page.id)) {
             if(!userPages.hasOwnProperty('audit'))
-            userPages['audit'] = {SAQ: []};
-            
-            userPages['audit']['SAQ'].push({
-              title: page.title, path: page.path
+            userPages['audit'] = {MAINAUDIT: [], SAQ: []};
+
+            userPages['audit']['MAINAUDIT'].push({
+              title: page.title, navlink: page.navlink
             });
           }
+
+          // SAQ AUDIT
+          if([1, 2, 3].includes(page.id)) {
+            if(!userPages.hasOwnProperty('audit'))
+            userPages['audit'] = {MAINAUDIT: [], SAQ: []};
+            
+            userPages['audit']['SAQ'].push({
+              title: page.title, navlink: page.navlink
+            });
+          }
+
+
+          // OPERATION
+          if([5, 6, 7].includes(page.id)) {
+            if(!userPages.hasOwnProperty('operation'))
+            userPages['operation'] = {OPERATION: []};
+            
+            userPages['operation']['OPERATION'].push({
+              title: page.title, navlink: page.navlink
+            });
+          }
+
+          // LEGAL
+          if([8, 9].includes(page.id)) {
+            if(!userPages.hasOwnProperty('legal'))
+            userPages['legal'] = {LEGAL: []};
+            
+            userPages['legal']['LEGAL'].push({
+              title: page.title, navlink: page.navlink
+            });
+          }
+
+          // GM
+
       }
     }
     console.log(activePage);
-    // console.log(userPages);
+    console.log(userPages);
     return userPages;
   }
 
