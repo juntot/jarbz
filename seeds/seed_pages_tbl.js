@@ -7,7 +7,7 @@ exports.seed = function(knex) {
       return knex('PAGES_TBL').insert([
         {id: 1, title: 'SAQ Sites',                   navlink: '/all-sites'},
         {id: 2, title: 'SAQ Files',                   navlink: '/saq-files'},
-        {id: 3, title: 'Site Evaluation Summary',     navlink: '#/'},
+        {id: 3, title: 'Site Evaluation Summary',     navlink: '/site-evaluation-summary'},
         
         // main audit
         {id: 4, title: 'Partner Evaluation Summary',  navlink: '/partner-evaluator'},

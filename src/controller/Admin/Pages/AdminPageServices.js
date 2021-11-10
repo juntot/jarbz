@@ -83,9 +83,9 @@ class AdminPageServices extends BaseRepository{
            * 1 SAQ SITES
            * 2 SAQ FILES
            */
-          console.log([1, 2].includes(page.id),' ---- ',activePage[page.id], page.id)
+          // console.log([1, 2].includes(page.id),' ---- ',activePage[page.id], page.id)
           // MAIN AUDIT
-          if([4].includes(page.id)) {
+          if([3, 4].includes(page.id)) {
             if(!userPages.hasOwnProperty('audit'))
             userPages['audit'] = {MAINAUDIT: [], SAQ: []};
 
@@ -95,7 +95,7 @@ class AdminPageServices extends BaseRepository{
           }
 
           // SAQ AUDIT
-          if([1, 2, 3].includes(page.id)) {
+          if([1, 2].includes(page.id)) {
             if(!userPages.hasOwnProperty('audit'))
             userPages['audit'] = {MAINAUDIT: [], SAQ: []};
             
@@ -129,7 +129,7 @@ class AdminPageServices extends BaseRepository{
 
       }
     }
-    console.log(activePage);
+    // console.log(activePage);
     console.log(userPages);
     return userPages;
   }

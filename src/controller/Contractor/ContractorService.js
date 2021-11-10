@@ -16,7 +16,7 @@ class ContractorService extends BaseRepository{
       .andWhere('status', 1)
       .select();
     
-    
+  
     return result.map(res=>{
       res['team'] = JSON.parse(res.team);
       res['documents'] = JSON.parse(res.documents);
