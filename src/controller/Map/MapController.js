@@ -40,10 +40,20 @@ const mySite = async (req, res) => {
   // res.status(200).json(result);
 }
 
-
+// uploading sites
 const uploadSite = async (req, res) =>  {
   // console.log(req.body);
   const result = await MapServices.insertMany(req.body);
+  res.status(200).json(result);
+}
+
+
+// site evalution summary
+const siteSummary = async (req, res) => {
+  const from = req.params.from || moment(new Date()).format('YYYY-MM-DD 00:00:00');
+  const end = req.params.end || moment(new Date()).format('YYYY-MM-DD 23:59:59');
+    
+  const result = await MapServices.siteSummary(from, end);
   res.status(200).json(result);
 }
 // update user
@@ -53,5 +63,6 @@ module.exports = {
   updateSite,
   removeSite,
   addSite,
-  uploadSite
+  uploadSite,
+  siteSummary
 }

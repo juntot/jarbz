@@ -12,7 +12,13 @@ module.exports = {
       host : process.env.MYSQL_HOST
     },
     pool: {
-      min: 2,
+      acquireTimeoutMillis: 60000,
+      createTimeoutMillis: 30000,
+      destroyTimeoutMillis: 1000,
+      idleTimeoutMillis: 10000,
+      min: 0,
       max: 10
     },
+    // connectionTimeout: 15000,
+    
 };

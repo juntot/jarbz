@@ -22,6 +22,8 @@ exports.up = function(knex) {
 
     table.boolean('docstat').defaultTo(0);
     table.boolean('status').defaultTo(1);
+    table.timestamp('created_at').defaultTo(knex.fn.now());
+    table.timestamp('updated_at').defaultTo(knex.fn.now());
   });
 };
 

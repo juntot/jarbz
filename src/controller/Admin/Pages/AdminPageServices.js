@@ -60,17 +60,19 @@ class AdminPageServices extends BaseRepository{
   // get user page access
   async getPageUser(userId){
     console.log(APP, '[getPageUser]');
-
+    
     let list = await this._knex('USERPAGE_TBL')
               .select('pages')
               .where('userId', userId)
               .first();
+              
+    // console.log(list);
     if(!list)
-    return [];
+    return {};
 
     const pageList = await this._knex('PAGES_TBL').select().where('status', 1);
     let activePage = await JSON.parse(list.pages);
-    
+    console.log(pageList);
     /**
      *  START BUILDING PAGES FOR USER
      */
