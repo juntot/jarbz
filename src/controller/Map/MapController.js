@@ -47,15 +47,80 @@ const uploadSite = async (req, res) =>  {
   res.status(200).json(result);
 }
 
-
 // site evalution summary
 const siteSummary = async (req, res) => {
   const from = req.params.from || moment(new Date()).format('YYYY-MM-DD 00:00:00');
   const end = req.params.end || moment(new Date()).format('YYYY-MM-DD 23:59:59');
-    
-  const result = await MapServices.siteSummary(from, end);
+  const status = req.body.status || 1;
+
+  const result = await MapServices.siteSummary(from, end, status);
   res.status(200).json(result);
 }
+
+// OPERATION TEAM =============================================================
+// site technical evaluation
+const siteTechEval = async (req, res) => {
+    const from = req.params.from || moment(new Date()).format('YYYY-MM-DD 00:00:00');
+    const end = req.params.end || moment(new Date()).format('YYYY-MM-DD 23:59:59');
+    const status = req.body.status || 2;
+
+    const result = await MapServices.siteTechEvaluation(from, end, status);
+    res.status(200).json(result);
+}
+
+// site technical evaluation udpate or insert
+const siteUpdatetechicalEval = async(req, res) => {
+  const body = req.body || '';
+  const location = req.params.location || '';
+  body['_location'] = location;
+  const result = await MapServices.siteUpdatetechicalEval(body)
+  res.status(200).json(result)
+}
+
+
+// site tech evaluation summary
+const siteTechEvalSummary = async (req, res) => {
+  const from = req.params.from || moment(new Date()).format('YYYY-MM-DD 00:00:00');
+  const end = req.params.end || moment(new Date()).format('YYYY-MM-DD 23:59:59');
+  const status = req.body.status || 1;
+
+  const result = await MapServices.siteTechEvalSummary(from, end, status);
+  res.status(200).json(result)
+}
+
+// LEGAL TEAM =============================================================
+// site legal evaluation
+const siteLegalAssess = async (req, res) => {
+  const from = req.params.from || moment(new Date()).format('YYYY-MM-DD 00:00:00');
+  const end = req.params.end || moment(new Date()).format('YYYY-MM-DD 23:59:59');
+  const status = req.body.status || 2;
+
+  const result = await MapServices.siteLegalAssess(from, end, status);
+  res.status(200).json(result);
+}
+
+// site legal evaluation udpate or insert
+const siteUpdateLegalAssess = async(req, res) => {
+const body = req.body || '';
+const location = req.params.location || '';
+body['_location'] = location;
+const result = await MapServices.siteUpdateLegalAssess(body)
+res.status(200).json(result)
+}
+
+
+// site legal evaluation summary
+const siteLegalAssessSummary = async (req, res) => {
+const from = req.params.from || moment(new Date()).format('YYYY-MM-DD 00:00:00');
+const end = req.params.end || moment(new Date()).format('YYYY-MM-DD 23:59:59');
+const status = req.body.status || 1;
+
+const result = await MapServices.siteLegalAssessSummary(from, end, status);
+res.status(200).json(result)
+}
+
+
+
 // update user
 module.exports = {
   siteList,
@@ -64,5 +129,11 @@ module.exports = {
   removeSite,
   addSite,
   uploadSite,
-  siteSummary
+  siteSummary,
+  siteTechEval,
+  siteUpdatetechicalEval,
+  siteTechEvalSummary,
+  siteLegalAssess,
+  siteUpdateLegalAssess,
+  siteLegalAssessSummary,
 }

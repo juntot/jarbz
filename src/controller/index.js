@@ -19,8 +19,9 @@ const {
   addDocuments,
   getContractorDetails
 } = require('./Contractor/ContractorController');
-const { siteList, mySite, addSite, updateSite, removeSite, uploadSite, siteSummary } = require('./Map/MapController');
+const { siteList, mySite, addSite, updateSite, removeSite, uploadSite, siteSummary, siteTechEval, siteUpdatetechicalEval, siteTechEvalSummary, siteUpdateLegalAssess, siteLegalAssess, siteLegalAssessSummary } = require('./Map/MapController');
 const { addMessage, messageList, removeMessages } = require('./Map/MessageController');
+
 
 
 module.exports = {
@@ -49,7 +50,20 @@ module.exports = {
   // map
   '/api/site/upload': uploadSite,
   '/api/site/create': addSite,
+  
+  // operation team
+  '/api/site/tech-eval/:location/update': siteUpdatetechicalEval,
+  '/api/site/tech-eval/:from/:end': siteTechEval,
+  '/api/site/tech-eval-summary/:from/:end': siteTechEvalSummary,
+  
+  //  legal team
+  '/api/site/legal-assess/:location/update': siteUpdateLegalAssess,
+  '/api/site/legal-assess/:from/:end': siteLegalAssess,
+  '/api/site/legal-assess-summary/:from/:end': siteLegalAssessSummary,
+
+
   '/api/site/eval-summary/:from/:end' : siteSummary,
+
   '/api/site/:id/update': updateSite,
   '/api/site/:id/remove': removeSite,
   '/api/site/:id' : mySite,
