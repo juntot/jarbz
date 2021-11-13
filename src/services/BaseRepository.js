@@ -29,6 +29,19 @@ class BaseRepository {
   }
 
   /**
+   *  @param {string} table
+   *  @param {object} body
+   */
+  async insertOrUpdate(table, body){
+
+    const insert = await this._knex(table || this._table).insert(body).toString();
+    const update = await this._knex(table || this._table).update(body).toString().replace(/^update(.*?)set\s/gi, '');
+    return await this._knex
+      .raw(`${insert} ON DUPLICATE KEY UPDATE ${update}`);
+  }
+
+
+  /**
    * @param {*} knownKey -
    * @param {*} knownValue -
    */
