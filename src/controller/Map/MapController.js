@@ -5,18 +5,24 @@ const MapServices = require("./MapServices");
 
 // Site Lists
 const siteList = async (req, res) => {
-  const result = await MapServices.getAllBySpecificKey('status', 1)
+  const status = req.params.status || 1;
+  const result = await MapServices.siteList('status', status)
   res.status(200).json(result);
 }
 
 // add site
 const addSite = async (req, res) =>{
   const body = req.body;
-  const result = await MapServices.insert(body);
-  res.status(200).json(result);
+  try {
+    const result = await MapServices.insert(body);  
+    res.status(200).json(result);
+  } catch (error) {
+    return res.status(400).json({message: error.message});
+  }
+  
 }
 
-// udpate site
+// update site
 const updateSite = async (req, res) =>{
   const id = req.params.id || '';
   await MapServices.updateBySpecificKey('location', id, req.body);

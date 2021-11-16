@@ -209,6 +209,10 @@ class BaseRepository {
   async updateBySpecificKey(specifiedKey, specifiedValue, updateValues) {
     console.log(APP, '[updateBySpecificKey]');
     let result;
+
+    console.log(result = await knex(this._table)
+    .where({[specifiedKey]: specifiedValue})
+    .update(updateValues).toString());
     try {
       result = await knex(this._table)
           .where({[specifiedKey]: specifiedValue})

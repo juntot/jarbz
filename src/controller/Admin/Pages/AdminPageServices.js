@@ -53,7 +53,7 @@ class AdminPageServices extends BaseRepository{
       return acc;
     }, []);
 
-    console.log(userPages);
+    // console.log(userPages);
     return userPages;
   }
 
@@ -72,7 +72,7 @@ class AdminPageServices extends BaseRepository{
 
     const pageList = await this._knex('PAGES_TBL').select().where('status', 1);
     let activePage = await JSON.parse(list.pages);
-    console.log(pageList);
+    // console.log(pageList);
     /**
      *  START BUILDING PAGES FOR USER
      */
@@ -132,7 +132,7 @@ class AdminPageServices extends BaseRepository{
       }
     }
     // console.log(activePage);
-    console.log(userPages);
+    // console.log(userPages);
     return userPages;
   }
 

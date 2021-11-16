@@ -19,11 +19,16 @@ exports.up = function(knex) {
     table.boolean('photoLandOwner').defaultTo(0);
     table.boolean('visinityPlan').defaultTo(0);
     table.boolean('LIS').defaultTo(0);
+    table.string('auditPercent');
 
-    table.boolean('docstat').defaultTo(0);
+    table.boolean('docstat').defaultTo(1);
     table.boolean('status').defaultTo(1);
     table.timestamp('created_at').defaultTo(knex.fn.now());
     table.timestamp('updated_at').defaultTo(knex.fn.now());
+
+    table.text('actionRemarks');
+    table.string('_actionby');
+    table.timestamp('action_date').defaultTo(knex.fn.now());
   });
 };
 

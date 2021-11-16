@@ -66,6 +66,7 @@ module.exports = {
 
   '/api/site/:id/update': updateSite,
   '/api/site/:id/remove': removeSite,
+  '/api/site/:status/stat': siteList,
   '/api/site/:id' : mySite,
   '/api/site': siteList,
 

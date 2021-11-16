@@ -5,13 +5,49 @@ class MapServices extends BaseRepository{
     super('MAP_TBL');
   }
 
+  // site list
+  async siteList(knownKey, knownValue) {
+    console.log(APP, '[siteList]');
+    let result;
+    try {
+      result = this._knex(this._table)
+          // not deleted
+          //  -1 means deleted
+          if(knownValue !== '-1'){
+            result = result.where({[knownKey]: knownValue})
+            .andWhere({docstat: 1})
+            .select();
+            console.log(result.toString())
+          }else {
+            result = result.where({docstat: 0})
+            .select();
+            console.log(result.toString())
+          }
+          
+      result  = await result;
+          
+    } catch (SQLError) {
+      console.log(SQLError);
+      throw new Error(SQLError);
+    }
+    return result;
+  }
   /*
   *  AUDIT DEPT
   */
   // add site map
   async insert(body){
-    await this._knex(this._table).insert(body);
-    return body;
+    try {
+      await this._knex(this._table).insert(body); 
+      return body;
+    } catch (SQLError) {
+      throw {
+        message: SQLError.sqlMessage, 
+        code: SQLError.errno
+      };
+      // throw new Error(SQLError.sqlMessage);
+    }
+    
   }
   
   
@@ -27,14 +63,23 @@ class MapServices extends BaseRepository{
 
   // site summary
   async siteSummary(from, to, status) {
-    console.log(APP, '[siteSummary]');
+    console.log(APP, '[siteSummary]');    
+  
+  return await this._knex.select('site.*',
+        this._knex.raw(`(select CONCAT(subemp.firstName," ", subemp.lastName)
+        from USERS_TBL subemp
+          where subemp.userId = site._createdby) as _createdby`),
 
-    return await this._knex(this._table)
-      .whereBetween(`${this._table}.created_at`, [from, to])
-      .andWhere('auditPercent', '100')
-      .andWhere('status', status)
-      .andWhere('docstat', 0)
-      .select();
+        this._knex.raw(`(select CONCAT(subemp.firstName," ", subemp.lastName)
+        from USERS_TBL subemp
+          where subemp.userId = site._actionby) as _actionby`) 
+      ) 
+      .from({site: this._table})
+      // .innerJoin({user: 'USERS_TBL'}, 'site.location', '=', 'siteTech._location')
+      .whereBetween(`site.created_at`, [from, to])
+      .andWhere('site.auditPercent', '100')
+      .andWhere('site.status', status)
+      .andWhere('site.docstat', 1)
   }
 
   /*
@@ -45,9 +90,22 @@ class MapServices extends BaseRepository{
     console.log(APP, '[siteTechEvaluation]');
 
     const query = this._knex.select('site.*', 'siteTech.siteSurvey', 
+    'site.created_at',
     'siteTech.soilTest', 'siteTech.siteEvalForm', 'siteTech.techEval',
-    'siteTech._evaluatedby', 'siteTech.updated_at', 'siteTech.status',
-    'siteTech.techEvalPercent'
+    'siteTech.updated_at', 'siteTech.updated_at', 
+    'siteTech.status', 'siteTech.techEvalPercent',
+    'siteTech.actionRemarks', 'siteTech.action_date', 
+    this._knex.raw(`(select CONCAT(subemp.firstName," ", subemp.lastName)
+        from USERS_TBL subemp
+          where subemp.userId = site._createdby) as _createdby`),
+
+    this._knex.raw(`(select CONCAT(subemp.firstName," ", subemp.lastName)
+        from USERS_TBL subemp
+          where subemp.userId = siteTech._evaluatedby) as _evaluatedby`),
+    
+    this._knex.raw(`(select CONCAT(subemp.firstName," ", subemp.lastName)
+    from USERS_TBL subemp
+      where subemp.userId = siteTech._actionby) as _actionby`)
     )
     .from({ site: this._table })
     .leftJoin({ siteTech: 'SITE_TECH_EVAL' }, 
@@ -65,7 +123,7 @@ class MapServices extends BaseRepository{
                        .orWhere('siteTech.status', 1);
     }
     // approved
-    if(status == 2)
+    if(status !== 1)
     return await query.andWhere('siteTech.status', status);
 
   }
@@ -81,9 +139,22 @@ class MapServices extends BaseRepository{
     
 
     const query = this._knex.select('site.*', 'siteTech.siteSurvey', 
+    'site.created_at',
     'siteTech.soilTest', 'siteTech.siteEvalForm', 'siteTech.techEval',
-    'siteTech._evaluatedby', 'siteTech.updated_at', 'siteTech.status',
-    'siteTech.techEvalPercent'
+    'siteTech.updated_at', 'siteTech.updated_at', 
+    'siteTech.status', 'siteTech.techEvalPercent',
+    'siteTech.actionRemarks', 'siteTech.action_date', 
+    this._knex.raw(`(select CONCAT(subemp.firstName," ", subemp.lastName)
+        from USERS_TBL subemp
+          where subemp.userId = site._createdby) as _createdby`),
+
+    this._knex.raw(`(select CONCAT(subemp.firstName," ", subemp.lastName)
+        from USERS_TBL subemp
+          where subemp.userId = siteTech._evaluatedby) as _evaluatedby`),
+    
+    this._knex.raw(`(select CONCAT(subemp.firstName," ", subemp.lastName)
+    from USERS_TBL subemp
+      where subemp.userId = siteTech._actionby) as _actionby`)
     )
       .from({site: this._table})
       .innerJoin({siteTech: 'SITE_TECH_EVAL'}, 'site.location', '=', 'siteTech._location')
@@ -96,7 +167,7 @@ class MapServices extends BaseRepository{
                        .andWhere('siteTech.status', status);
 
     // approved
-    if(status == 2)
+    if(status !== 1)
     return await query.andWhere('siteTech.status', status);
   }
 
@@ -110,8 +181,21 @@ class MapServices extends BaseRepository{
     const query = this._knex.select('site.*', 'siteLegal.contracts', 
     'siteLegal.LCR', 'siteLegal.towerConsPermit', 'siteLegal.fencingPermit',
     'siteLegal.excavationPermit', 'siteLegal.bldgPermit', 'siteLegal.cenroPermit',
-    'siteLegal._legalAssessBy', 'siteLegal.updated_at', 'siteLegal.status',
-    'siteLegal.legalAssessPercent'
+    'siteLegal.created_at', 'siteLegal.updated_at', 'siteLegal.status',
+    'siteLegal.legalAssessPercent', 'siteLegal.actionRemarks',
+    'siteLegal._actionby', 'siteLegal.action_date',
+
+    this._knex.raw(`(select CONCAT(subemp.firstName," ", subemp.lastName)
+        from USERS_TBL subemp
+          where subemp.userId = site._createdby) as _createdby`),
+
+    this._knex.raw(`(select CONCAT(subemp.firstName," ", subemp.lastName)
+        from USERS_TBL subemp
+          where subemp.userId = siteLegal._legalAssessBy) as _legalAssessBy`),
+    
+    this._knex.raw(`(select CONCAT(subemp.firstName," ", subemp.lastName)
+    from USERS_TBL subemp
+      where subemp.userId = siteLegal._actionby) as _actionby`)
     )
     .from({ site: this._table })
     .innerJoin({siteTech: 'SITE_TECH_EVAL'}, 'site.location', '=', 'siteTech._location')
@@ -126,7 +210,7 @@ class MapServices extends BaseRepository{
                        .andWhere('siteLegal.status', null)
                        .orWhere('siteLegal.status', status);
     // approved
-    if(status == 2)
+    if(status !== 1)
     return await query.andWhere('siteLegal.status', status);
   }
 
@@ -143,8 +227,21 @@ class MapServices extends BaseRepository{
     const query = this._knex.select('site.*', 'siteLegal.contracts', 
     'siteLegal.LCR', 'siteLegal.towerConsPermit', 'siteLegal.fencingPermit',
     'siteLegal.excavationPermit', 'siteLegal.bldgPermit', 'siteLegal.cenroPermit',
-    'siteLegal._legalAssessBy', 'siteLegal.updated_at', 'siteLegal.status',
-    'siteLegal.legalAssessPercent'
+    'siteLegal.created_at', 'siteLegal.updated_at', 'siteLegal.status',
+    'siteLegal.legalAssessPercent', 'siteLegal.actionRemarks',
+    'siteLegal._actionby', 'siteLegal.action_date',
+
+    this._knex.raw(`(select CONCAT(subemp.firstName," ", subemp.lastName)
+        from USERS_TBL subemp
+          where subemp.userId = site._createdby) as _createdby`),
+
+    this._knex.raw(`(select CONCAT(subemp.firstName," ", subemp.lastName)
+        from USERS_TBL subemp
+          where subemp.userId = siteLegal._legalAssessBy) as _legalAssessBy`),
+    
+    this._knex.raw(`(select CONCAT(subemp.firstName," ", subemp.lastName)
+    from USERS_TBL subemp
+      where subemp.userId = siteLegal._actionby) as _actionby`)
     )
       .from({site: this._table})
       .innerJoin({siteLegal: 'SITE_LEGAL_ASSESS'}, 'site.location', '=', 'siteLegal._location')
@@ -156,7 +253,7 @@ class MapServices extends BaseRepository{
                        .andWhere('siteLegal.status', status);
 
     // approved
-    if(status == 2)
+    if(status !== 1)
     return await query.andWhere('siteLegal.status', status);
   }
 

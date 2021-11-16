@@ -11,6 +11,10 @@ exports.up = function(knex) {
       table.timestamp('created_at').defaultTo(knex.fn.now());
       table.timestamp('updated_at').defaultTo(knex.fn.now());
       table.integer('status').defaultTo(1);
+
+      table.text('actionRemarks');
+      table.string('_actionby');
+      table.timestamp('action_date').defaultTo(knex.fn.now());
   });
 };
 

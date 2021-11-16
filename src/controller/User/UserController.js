@@ -10,6 +10,8 @@ const login = async (req, res) => {
     let user = await UserServices.getBySpecificKey('email', email)
     console.log(user);
     if(user) {
+        if (user.status === 0)
+        return res.status(400).json({message: 'Account disabled'});
         // verify password here
         if(user.password == password){
             const token = await JWTService.signIn({user: user._id});
