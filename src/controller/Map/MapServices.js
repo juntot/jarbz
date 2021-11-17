@@ -13,15 +13,21 @@ class MapServices extends BaseRepository{
       result = this._knex(this._table)
           // not deleted
           //  -1 means deleted
-          if(knownValue !== '-1'){
+          //  9 all sites
+          console.log(knownValue);
+          if(knownValue === 'all') {
+            result = result.select();
+
+          }else if(knownValue !== '-1' && knownValue !== 9){
+
             result = result.where({[knownKey]: knownValue})
             .andWhere({docstat: 1})
             .select();
-            console.log(result.toString())
+
           }else {
             result = result.where({docstat: 0})
             .select();
-            console.log(result.toString())
+            // console.log(result.toString())
           }
           
       result  = await result;

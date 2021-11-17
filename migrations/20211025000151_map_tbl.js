@@ -14,7 +14,7 @@ exports.up = function(knex) {
     table.boolean('taxDec').defaultTo(0);
     table.boolean('taxClearance').defaultTo(0);
     table.boolean('sketchPlan').defaultTo(0);
-    table.boolean('landTitle').defaultTo(0);
+    table.boolean('contactPerID').defaultTo(0);
     table.boolean('coordPhoto').defaultTo(0);
     table.boolean('photoLandOwner').defaultTo(0);
     table.boolean('visinityPlan').defaultTo(0);

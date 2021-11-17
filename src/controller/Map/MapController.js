@@ -5,7 +5,7 @@ const MapServices = require("./MapServices");
 
 // Site Lists
 const siteList = async (req, res) => {
-  const status = req.params.status || 1;
+  const status = req.params.status || 'all';
   const result = await MapServices.siteList('status', status)
   res.status(200).json(result);
 }

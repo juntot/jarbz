@@ -5,7 +5,7 @@ exports.up = function(knex) {
       table.boolean('siteSurvey').defaultTo(0);
       table.boolean('soilTest').defaultTo(0);
       table.boolean('siteEvalForm').defaultTo(0);
-      table.boolean('techEval').defaultTo(0);
+      // table.boolean('techEval').defaultTo(0);
       table.string('techEvalPercent');
       table.string('_evaluatedby');
       table.timestamp('created_at').defaultTo(knex.fn.now());
