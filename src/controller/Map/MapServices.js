@@ -97,7 +97,7 @@ class MapServices extends BaseRepository{
 
     const query = this._knex.select('site.*', 'siteTech.siteSurvey', 
     'site.created_at',
-    'siteTech.soilTest', 'siteTech.siteEvalForm', 'siteTech.techEval',
+    'siteTech.soilTest', 'siteTech.siteEvalForm', 
     'siteTech.updated_at', 'siteTech.updated_at', 
     'siteTech.status', 'siteTech.techEvalPercent',
     'siteTech.actionRemarks', 'siteTech.action_date', 
@@ -146,7 +146,7 @@ class MapServices extends BaseRepository{
 
     const query = this._knex.select('site.*', 'siteTech.siteSurvey', 
     'site.created_at',
-    'siteTech.soilTest', 'siteTech.siteEvalForm', 'siteTech.techEval',
+    'siteTech.soilTest', 'siteTech.siteEvalForm', 
     'siteTech.updated_at', 'siteTech.updated_at', 
     'siteTech.status', 'siteTech.techEvalPercent',
     'siteTech.actionRemarks', 'siteTech.action_date', 

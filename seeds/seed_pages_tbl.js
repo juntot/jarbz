@@ -21,6 +21,7 @@ exports.seed = function(knex) {
         {id: 8, title: 'Site legal assessment',       navlink: '/site-legal-assessment'},
         {id: 9, title: 'Site legal Summary',          navlink: '/site-legal-summary'},
 
+        // GM
         {id: 10, title: 'Approve Sites',              navlink: '/approved-site'},
       ]);
     });

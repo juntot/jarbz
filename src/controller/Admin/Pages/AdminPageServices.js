@@ -128,7 +128,14 @@ class AdminPageServices extends BaseRepository{
           }
 
           // GM
-
+          if([10].includes(page.id)) {
+            if(!userPages.hasOwnProperty('gm'))
+            userPages['gm'] = {GM: []};
+            
+            userPages['gm']['GM'].push({
+              title: page.title, navlink: page.navlink
+            });
+          }
       }
     }
     // console.log(activePage);
