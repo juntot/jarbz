@@ -1,6 +1,6 @@
 exports.up = function(knex) {
   return knex.schema.createTable('PARTNER_TBL', function(table) {
-    table.string('userId_').primary();
+    table.string('_userId').primary();
     // table.jsonb('documents').defaultTo({});
     // table.jsonb('team').defaultTo([]);
     
