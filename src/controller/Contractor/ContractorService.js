@@ -1,4 +1,6 @@
 const BaseRepository = require('../../services/BaseRepository')
+const FTP = require('../../services/FTP');
+
 const APP = '[ContractorService]'
 class ContractorService extends BaseRepository{
   constructor(){
@@ -11,7 +13,7 @@ class ContractorService extends BaseRepository{
     console.log(APP, '[getContractorEval]');
 
     const result = await this._knex(this._table)
-      .innerJoin('USERS_TBL', 'USERS_TBL.userId', `${this._table}.userId_`)
+      .innerJoin('USERS_TBL', 'USERS_TBL.userId', `${this._table}._userId`)
       .whereBetween(`${this._table}.created_at`, [from, to])
       .andWhere('status', 1)
       .select();
@@ -26,18 +28,40 @@ class ContractorService extends BaseRepository{
   }
 
   
-  // insert or update contractor docs
-  async insertOrUpdateDocs(body, userId) {
+  // insert or update contractor Docs
+  async insertOrUpdateDocs(body, file) {
     console.log(APP, '[insertOrUpdateDocs]');
+    const userId = body._userId;
+    
+    
+    try {
+      
+      // upload file to ftp
+      const imageUrl = await FTP.uploadJSFTP(file, userId);
+      
+      // get the existing records
+      let userDocs = await this._knex(this._table).select('documents').where({_userId: userId}).first();
 
-    body['userId_'] = userId;
-    body['team'] = JSON.stringify(body.team);
-    body['documents'] = JSON.stringify(body.documents);
+      // insert or update the existing records
+      const docsData = {
+        _userId: userId,
+        documents: JSON.stringify({
+          ...JSON.parse((userDocs.documents) || '{}'),
+          [body.name]: imageUrl
+        })
+      }
 
-    const insert = await this._knex(this._table).insert(body).toString();
-    const update = await this._knex(this._table).update(body).toString().replace(/^update(.*?)set\s/gi, '');
-    return await this._knex
-      .raw(`${insert} ON DUPLICATE KEY UPDATE ${update}`);
+      const insert = await this._knex(this._table).insert(docsData).toString();
+      const update = await this._knex(this._table).update(docsData).toString().replace(/^update(.*?)set\s/gi, '');
+      await this._knex.raw(`${insert} ON DUPLICATE KEY UPDATE ${update}`);
+      // console.log(imageUrl);
+      return {
+            message: "Upload was successful",
+            data: imageUrl,
+      };
+    } catch (error) {
+      throw error;
+    }
   }
 
 
@@ -47,7 +71,9 @@ class ContractorService extends BaseRepository{
     // console.log(body, userId);
     // console.log(this._knex(this._table).insert('body').toString()+' ON DUPLICATE KEY ');
     // console.log(this._knex(this._table).update('body').toString().replace(/^update(.*?)set\s/gi, ''))
-    body['userId_'] = userId;
+
+
+    body['_userId'] = userId;
     body['team'] = JSON.stringify(body.team || []);
     body['documents'] = JSON.stringify(body.documents || {});
     // try {
@@ -62,22 +88,9 @@ class ContractorService extends BaseRepository{
     //   throw error;
     // }
     
-    // return true;
-    
     const insert = await this._knex(this._table).insert(body).toString();
     const update = await this._knex(this._table).update(body).toString().replace(/^update(.*?)set\s/gi, '');
-    return await this._knex
-      .raw(`${insert} ON DUPLICATE KEY UPDATE ${update}`);
-
-    // return await this._knex
-    //   .raw(`INSERT INTO ${this._table} 
-    //   (userId_, documents, team) 
-    //   values (?, ?, ?) 
-    //   ON DUPLICATE KEY 
-    //     UPDATE documents= ?, 
-    //     team = ?
-    //   `, 
-    //   [userId, body, body, body, body]);
+    return await this._knex.raw(`${insert} ON DUPLICATE KEY UPDATE ${update}`);
   }
 }
 
