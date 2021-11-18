@@ -1,7 +1,8 @@
 const moment = require('moment');
-const ContractorDocSchema = require('../../../schema/ContractorDocSchema');
-const GC = require('../../services/Bucket');
+// const ContractorDocSchema = require('../../../schema/ContractorDocSchema');
+// const GC = require('../../services/Bucket');
 const ContractorService = require('./ContractorService');
+const FTP = require('../../services/FTP');
 
 // get contractor for evaluation
 const getContractorEval = async (req, res) =>{
@@ -38,14 +39,16 @@ const addDocuments = async (req, res) => {
   
   try {
       const file = req.file
+      
       // const imageUrl = await GC.uploadFile(file)
-      const imageUrl = await FTP.uploadJSFTP(file);
       // udpate user schema documents
       // await ContractorDocSchema.findOneAndUpdate({_iduser: id},{
       //         ['documents.'+req.body.name] : imageUrl
       // }, {upsert: true});
 
-      console.log(file);
+      const imageUrl = await FTP.uploadJSFTP(file, id);
+      // await ContractorService.insertOrUpdateDocs(body, userId)
+      console.log(imageUrl);
       res.status(200)
         .json({
           message: "Upload was successful",

@@ -39,18 +39,34 @@ ftpconn.on('data', function(data) {
    // do stuff here...
 })
 
-const uploadJSFTP = async (file) => {
+const uploadJSFTP = async (file, dir = '') => new Promise((resolve, reject) => {
   const { originalname, buffer } = file;
 
-  console.log(file, originalname);
-  ftpconn.put(buffer, new Date().valueOf()+'.'+originalname.split(".").pop(), err => {
+  // console.log(file, originalname);
+  const filePath = `${dir && dir+'/'}${new Date().valueOf()+'.'+originalname.split(".").pop()}`;
+  ftpconn.put(buffer, filePath, 
+    err => {
     if (!err) {      
       console.log("File transferred successfully!");
-      return `https://4th-jarb.com/icdi/${new Date().valueOf()+'.'+originalname.split(".").pop()}`;
+      resolve(`https://4th-jarb.com/icdi/${filePath}`);
     }
     else{
+      console.log(err);
+      reject(`Unable to upload image, something went wrong`);
+      // throw err;
+    }
+  });
+});
+
+
+const delFile = async (file) => {
+  ftpconn.raw("DELE", file, (err, data) => {
+    if (err) {
       throw err;
     }
+    console.log(data.text); // Show the FTP response text to the user
+    console.log(data.code); // Show the FTP response code to the user
+    return data.code;
   });
 }
 
@@ -81,4 +97,5 @@ module.exports = {
   uploadJSFTP,
   makeDIRJSFTP,
   delDIRJSFTP,
+  delFile,
 }

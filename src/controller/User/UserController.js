@@ -1,7 +1,7 @@
 const MailService = require('../../services/MailService');
 const JWTService = require("../../services/JWTService");
 const UserServices = require('./UserServices');
-
+const FTP = require('../../services/FTP');
 
 // login
 const login = async (req, res) => {
@@ -38,8 +38,11 @@ const login = async (req, res) => {
 const register = async (req, res) => {
     const body = req.body;
     body['password'] = Math.random().toString(36).substr(2, 8);
-    let user =  {...body, userId: `U${new Date().valueOf()}`};
+    const userId = `U${new Date().valueOf()}`;
+
+    let user =  {...body, userId: userId};
     try {
+        await FTP.makeDIRJSFTP(userId);
         await UserServices.insert(user);
         let mail = await MailService.send({
             from: 'info@4th-jarb.com', 
