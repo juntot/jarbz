@@ -272,11 +272,6 @@ class MapServices extends BaseRepository{
    */
   async siteCountStatus(){
     console.log(APP, '[siteCountStatus]');
-    // return await this._knex(this._table)
-    //   .sum('revenue')
-    //   .groupBy('status')
-    
-
 
     return await this._knex( this._table )
     .select(
