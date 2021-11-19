@@ -19,7 +19,7 @@ const {
   addDocuments,
   getContractorDetails
 } = require('./Contractor/ContractorController');
-const { siteList, mySite, addSite, updateSite, removeSite, uploadSite, siteSummary, siteTechEval, siteUpdatetechicalEval, siteTechEvalSummary, siteUpdateLegalAssess, siteLegalAssess, siteLegalAssessSummary } = require('./Map/MapController');
+const { siteList, mySite, addSite, updateSite, removeSite, uploadSite, siteSummary, siteTechEval, siteUpdatetechicalEval, siteTechEvalSummary, siteUpdateLegalAssess, siteLegalAssess, siteLegalAssessSummary, siteCount } = require('./Map/MapController');
 const { addMessage, messageList, removeMessages } = require('./Map/MessageController');
 
 
@@ -48,6 +48,7 @@ module.exports = {
   */
   
   // map
+  '/api/site/count': siteCount,
   '/api/site/upload': uploadSite,
   '/api/site/create': addSite,
   

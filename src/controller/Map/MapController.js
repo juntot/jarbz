@@ -126,7 +126,11 @@ res.status(200).json(result)
 }
 
 
-
+// site count per status
+const siteCount = async (req, res) => {
+  const result = await MapServices.siteCountStatus();
+  res.status(200).json(result);
+}
 // update user
 module.exports = {
   siteList,
@@ -142,4 +146,5 @@ module.exports = {
   siteLegalAssess,
   siteUpdateLegalAssess,
   siteLegalAssessSummary,
+  siteCount
 }
