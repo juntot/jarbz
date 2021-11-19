@@ -275,18 +275,12 @@ class MapServices extends BaseRepository{
     // return await this._knex(this._table)
     //   .sum('revenue')
     //   .groupBy('status')
-    console.log(this._knex( this._table )
-    .select(
-      this._knex.raw( `SUM(CASE WHEN status = 1 THEN 1 ELSE 0 END) AS 'TotalPending'` ),
-      this._knex.raw( `SUM(CASE WHEN status = 2 THEN 1 ELSE 0 END) AS 'TotalApproved'` ),
-      this._knex.raw( `SUM(CASE WHEN status = 0 THEN 1 ELSE 0 END) AS 'TotalRejected'` ),
-    )
-    .groupBy( 'status' ).toString());
+    
 
 
     return await this._knex( this._table )
     .select(
-      this._knex.raw( `SUM(CASE WHEN docstat = 0 THEN 1 ELSE 0 END) AS 'TotalSites'` ),
+      this._knex.raw( `SUM(CASE WHEN docstat = 1 THEN 1 ELSE 0 END) AS 'TotalSites'` ),
       this._knex.raw( `SUM(CASE WHEN status = 1 THEN 1 ELSE 0 END) AS 'TotalPending'` ),
       this._knex.raw( `SUM(CASE WHEN status = 2 THEN 1 ELSE 0 END) AS 'TotalApproved'` ),
       this._knex.raw( `SUM(CASE WHEN status = 0 THEN 1 ELSE 0 END) AS 'TotalRejected'` ),
