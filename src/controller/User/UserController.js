@@ -79,6 +79,13 @@ const register = async (req, res) => {
     res.status(200).json(user);
 };
 
+// forget Password
+const forgetPass = async (req, res) => {
+    const email = req.body.email || '';
+    res.status(200).json(await UserServices.forgetPass(email))
+}
+
+
 // USER LIST
 const userList = async (req, res) => {
     res.status(200).json(await UserServices.findAll());
@@ -100,4 +107,5 @@ module.exports = {
     // addDocuments,
     userList,
     // userInfo,
+    forgetPass,
 }

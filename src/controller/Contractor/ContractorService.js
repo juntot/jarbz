@@ -12,12 +12,17 @@ class ContractorService extends BaseRepository{
   async getContractorEval(from, to){
     console.log(APP, '[getContractorEval]');
 
-    const result = await this._knex(this._table)
-      .innerJoin('USERS_TBL', 'USERS_TBL.userId', `${this._table}._userId`)
-      .whereBetween(`${this._table}.created_at`, [from, to])
-      .andWhere('status', 1)
-      .select();
+    // const result = await this._knex(this._table)
+    //   .innerJoin('USERS_TBL', 'USERS_TBL.userId', `${this._table}._userId`)
+    //   .whereBetween(`${this._table}.created_at`, [from, to])
+    //   .andWhere('status', 1)
+    //  // .select();
     
+    const result = await this._knex.select('partner.*', 'user.*')
+    .from({partner: this._table})
+    .innerJoin({user: 'USERS_TBL'}, 'partner._userId', '=', 'user.userId')
+    .whereBetween('partner.created_at', [from, to])
+    .andWhere('partner.status', 1);
 
     return result.map(res=>{
       res['team'] = JSON.parse(res.team);

@@ -21,6 +21,7 @@ const {
 } = require('./Contractor/ContractorController');
 const { siteList, mySite, addSite, updateSite, removeSite, uploadSite, siteSummary, siteTechEval, siteUpdatetechicalEval, siteTechEvalSummary, siteUpdateLegalAssess, siteLegalAssess, siteLegalAssessSummary, siteCount } = require('./Map/MapController');
 const { addMessage, messageList, removeMessages } = require('./Map/MessageController');
+const { forgetPass } = require('./User/UserServices');
 
 
 
@@ -39,6 +40,7 @@ module.exports = {
   // '/api/test': test,
   '/api/login': login,
   '/api/register': register,
+  '/api/forgetpass': forgetPass,
   '/api/user/:id/update': updateUser,
   // '/api/user/search': userInfo,
   '/api/user': userList,
