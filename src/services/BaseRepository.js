@@ -210,9 +210,9 @@ class BaseRepository {
     console.log(APP, '[updateBySpecificKey]');
     let result;
 
-    console.log(result = await knex(this._table)
-    .where({[specifiedKey]: specifiedValue})
-    .update(updateValues).toString());
+    // console.log(result = await knex(this._table)
+    // .where({[specifiedKey]: specifiedValue})
+    // .update(updateValues).toString());
     try {
       result = await knex(this._table)
           .where({[specifiedKey]: specifiedValue})

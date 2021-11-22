@@ -93,9 +93,11 @@ const userList = async (req, res) => {
 
 // update user
 const updateUser = async (req, res) => {
+    const file = req.file;
+
     const body = req.body || {};
     const userId = req.params.id || '';
-    await UserServices.updateBySpecificKey('userId',userId, body)
+    await UserServices.updateUser('userId',userId, body, file)
     res.status(200).json('success');
 }
 

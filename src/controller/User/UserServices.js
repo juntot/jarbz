@@ -1,6 +1,8 @@
-const TAG = '[UserService]';
+const APP = '[UserService]';
 const BaseRepository = require('../../services/BaseRepository');
 const MailService = require('../../services/MailService');
+const FTP = require('../../services/FTP');
+
 /**
  * A class for Products
  * @class
@@ -22,7 +24,33 @@ class UserService extends BaseRepository{
    * User Access
    * @param {array} body
    */
- 
+  
+
+
+ /**
+   * UPDATE USER
+   * Find
+   * @param {array} body
+   */
+
+  async updateUser(knownKey, knownValue, value, file){
+    console.log(APP, '[updateUser]');
+    try {
+      // upload file to ftp
+      
+      if(file){
+        const imageUrl = await FTP.uploadJSFTP(file, userId);
+        value['avatar'] = imageUrl
+      }
+      
+      return await this.updateBySpecificKey(knownKey,knownValue, value);  
+
+    } catch (error) {
+      throw error;
+    }
+    
+  }
+
 
   /**
    * FORGET PASSWORD
@@ -30,6 +58,7 @@ class UserService extends BaseRepository{
    * @param {array} body
    */
    async forgetPass(email) {
+    console.log(APP, '[forgetPass]');
     const user = await this.getAllBySpecificKey('email', email);
     try {
         await MailService.send({
