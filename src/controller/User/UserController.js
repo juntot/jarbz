@@ -82,7 +82,10 @@ const register = async (req, res) => {
 // forget Password
 const forgetPass = async (req, res) => {
     const email = req.body.email || '';
-    res.status(200).json(await UserServices.forgetPass(email))
+    const user = await UserServices.forgetPass(email);
+    if(!user)
+    return res.status(400).json('Email not found');
+    res.status(200).json(user);
 }
 
 

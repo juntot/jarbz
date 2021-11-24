@@ -2,6 +2,7 @@ const moment = require('moment');
 exports.up = function(knex) {
   return knex.schema.createTable('USERS_TBL', function(table) {
     table.string('userId').primary().defaultTo(new Date().valueOf());
+    table.string('avatar');
     table.string('email');
     table.string('password').notNullable();
     table.string('role');

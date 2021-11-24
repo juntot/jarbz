@@ -59,7 +59,9 @@ class UserService extends BaseRepository{
    */
    async forgetPass(email) {
     console.log(APP, '[forgetPass]');
-    const user = await this.getAllBySpecificKey('email', email);
+    console.log(email)
+    const user = await this.getBySpecificKey('email', email);
+    
     try {
         await MailService.send({
           from: 'info@4th-jarb.com',
@@ -79,7 +81,7 @@ class UserService extends BaseRepository{
           4th-jarb Team
           </pre>`
         })
-        return user;
+        return 'success';
     } catch (error) {
       
     }

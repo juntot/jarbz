@@ -69,7 +69,7 @@ app.use('/dist', express.static(path.join(__dirname, 'public/dist')))
 
 
 // enforce path protection
-const excludePaths = ['/api/test', '/api/login', '/api/register',];
+const excludePaths = ['/api/test', '/api/login', '/api/register', '/api/forgetpass',];
 const protectedPath = Object.keys(controller).filter(path => !excludePaths.includes(path));
 authMiddleWare(app, protectedPath);
 
