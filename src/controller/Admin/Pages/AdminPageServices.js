@@ -87,7 +87,7 @@ class AdminPageServices extends BaseRepository{
            */
           // console.log([1, 2].includes(page.id),' ---- ',activePage[page.id], page.id)
           // MAIN AUDIT
-          if([3, 4].includes(page.id)) {
+          if([4].includes(page.id)) {
             if(!userPages.hasOwnProperty('audit'))
             userPages['audit'] = {MAINAUDIT: [], SAQ: []};
 
@@ -97,7 +97,7 @@ class AdminPageServices extends BaseRepository{
           }
 
           // SAQ AUDIT
-          if([1, 2].includes(page.id)) {
+          if([1, 2, 3].includes(page.id)) {
             if(!userPages.hasOwnProperty('audit'))
             userPages['audit'] = {MAINAUDIT: [], SAQ: []};
             

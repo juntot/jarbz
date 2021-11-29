@@ -57,7 +57,7 @@ const register = async (req, res) => {
             For any concerns or clarrification, 
             Please don't hesitate to contact our team.
 
-            contact# 09123456789
+            contact# (032) 401-4904
 
         
             Regards,

@@ -67,17 +67,17 @@ class UserService extends BaseRepository{
           from: 'info@4th-jarb.com',
           to: email,
           message: 
-          `<pre>
-          Hi, ${user.firstName},
+          `
+          Hi, ${user.firstName}, <br>
               Here's your password: ${user.password}
           
           For any concerns or clarrification, 
-          Please don't hesitate to contact our team.
+          Please don't hesitate to contact our team. <br><br>
 
-          contact# 09123456789
+          contact# (032) 401-4904
 
-      
-          Regards,
+          <br><br>
+          Regards,<br>
           4th-jarb Team
           </pre>`
         })
