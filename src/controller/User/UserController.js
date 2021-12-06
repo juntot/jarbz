@@ -1,8 +1,9 @@
-const MailService = require('../../services/MailService');
+// const MailService = require('../../services/MailService');
 const JWTService = require("../../services/JWTService");
+const ContractorService = require("../Contractor/ContractorService");
 const UserServices = require('./UserServices');
-const FTP = require('../../services/FTP');
-
+// const FTP = require('../../services/FTP');
+const APP = 'UserController';
 // login
 const login = async (req, res) => {
     const {email, password} = req.body;
@@ -37,37 +38,15 @@ const login = async (req, res) => {
 // register
 const register = async (req, res) => {
     const body = req.body;
-    body['password'] = Math.random().toString(36).substr(2, 8);
-    const userId = `U${new Date().valueOf()}`;
 
-    let user =  {...body, userId: userId};
+    let user = '';
     try {
-        await FTP.makeDIRJSFTP(userId);
-        await UserServices.insert(user);
-        let mail = await MailService.send({
-            from: 'info@4th-jarb.com', 
-            to: body.email, 
-            message: 
-            `<pre>
-            Hi ${body.firstName || ''},
-
-                Thank you for taking time to register. We're exited to work with you.
-            Here's your password: ${body.password}
-            
-            For any concerns or clarrification, 
-            Please don't hesitate to contact our team.
-
-            contact# (032) 401-4904
-
-        
-            Regards,
-            4th-jarb Team
-            </pre>`
-        });
-        console.log(mail);
-        
+        user = await UserServices.register(body);
+        await ContractorService.insertOrUpdate({_email: body.email, documents: '{}'}, user.userId);
     } catch (error) {
         console.log(error);
+        if(error.errno == 1062)
+        return res.status(400).json({message: 'Email already exists'});
         return res.status(400).json({message: error.message});
     }
     
@@ -104,6 +83,36 @@ const updateUser = async (req, res) => {
     res.status(200).json('success');
 }
 
+const insertOrUpdateUser = async (req, res) => {
+    console.log(APP, 'insertOrUpdateUser');
+    const body = req.body;
+    const  region =  req.body.region;
+    delete body.region;
+    
+    const user = await UserServices.getBySpecificKey('email', body.email)
+    let result = '';
+    
+    try {
+        // insert
+        if(!user){
+            result = await UserServices.register(body);
+            // await ContractorService.insertOrUpdate({_email: body.email, documents: '{}', region: region}, result.userId);
+        } else{
+        // update
+            await UserServices.updateUser('email', body.email, body);
+            // await ContractorService.insertOrUpdate({_email: body.email, documents: '{}', region: region}, result.userId);
+            body['userId'] = user.userId;
+            result = body;
+        } 
+        await ContractorService.insertOrUpdate({_email: body.email, documents: '{}', region: region}, result.userId); 
+        res.status(200).json(result);
+    } catch (error) {
+        console.log(error);
+        res.status(400).json(result);
+    }
+
+}
+
 module.exports = {
     // test,
     login,
@@ -113,4 +122,5 @@ module.exports = {
     userList,
     // userInfo,
     forgetPass,
+    insertOrUpdateUser
 }

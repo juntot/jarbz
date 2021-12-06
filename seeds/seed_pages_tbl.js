@@ -10,8 +10,9 @@ exports.seed = function(knex) {
         {id: 3, title: 'Site Evaluation',     navlink: '/site-evaluation-summary'},
         
         // main audit
-        {id: 11, title: 'Audit',  navlink: '/partner-evaluator'},
-        {id: 4, title: 'Team Evaluation',  navlink: '/partner-evaluator'},
+        {id: 12, title: 'Audit',  navlink: '/partner-evaluation'},
+        {id: 4, title: 'Team Evaluation',  navlink: '/partner-evaluation'},
+        {id: 11, title: 'Team Registration',  navlink: '/partner-registration'},
 
         // operation
         {id: 5, title: 'Site Technical Evaluation',   navlink: '/site-technical-evaluation'},

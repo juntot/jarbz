@@ -6,6 +6,7 @@ const {
   updateUser,
   // userInfo,
   forgetPass,
+  insertOrUpdateUser,
 } = require('./User/UserController');
 
 
@@ -18,24 +19,40 @@ const {
   getContractorEval,
   updateContractor,
   addDocuments,
-  getContractorDetails
+  getContractorDetails,
+  evaluateContractor,
+  getContractorList
 } = require('./Contractor/ContractorController');
 const { siteList, mySite, addSite, updateSite, removeSite, uploadSite, siteSummary, siteTechEval, siteUpdatetechicalEval, siteTechEvalSummary, siteUpdateLegalAssess, siteLegalAssess, siteLegalAssessSummary, siteCount } = require('./Map/MapController');
 const { addMessage, messageList, removeMessages } = require('./Map/MessageController');
+const { fileUploadHelper, fileDeleteHelper } = require('./Helper/HelperController');
+
+
 
 
 
 module.exports = {
+
+  /**
+   * HELPERS
+   */
+  
+  '/api/upload/:id/file': fileUploadHelper, 
+  '/api/file/delete': fileDeleteHelper, 
+
   /*
   * Users
   */
 
   // constructions
+  '/api/register/contractor': insertOrUpdateUser,
   '/api/contractor-evalation/:from/:end': getContractorEval,
+  '/api/contractor/list': getContractorList,
   '/api/contractor/:id/update': updateContractor,
   '/api/contractor/:id/documents': addDocuments,
   '/api/contractor/:id/details': getContractorDetails,
-
+  '/api/contractor/:id/evaluate': evaluateContractor,
+  
   // standard user
   // '/api/test': test,
   '/api/login': login,
@@ -66,7 +83,6 @@ module.exports = {
 
 
   '/api/site/eval-summary/:from/:end' : siteSummary,
-
   '/api/site/:id/update': updateSite,
   '/api/site/:id/remove': removeSite,
   '/api/site/:status/stat': siteList,

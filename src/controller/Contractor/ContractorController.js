@@ -3,6 +3,19 @@ const moment = require('moment');
 // const GC = require('../../services/Bucket');
 const ContractorService = require('./ContractorService');
 
+// get contractor List
+const getContractorList = async (req, res) =>{
+  try {
+    
+    const result = await ContractorService.contractorList();
+    res.status(200).json(result);
+
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({message: 'failed to evaluate please try again'});
+  }
+
+} 
 // get contractor for evaluation
 const getContractorEval = async (req, res) =>{
     const from = req.params.from || moment(from).format('YYYY-MM-DD 00:00:00');
@@ -16,8 +29,9 @@ const getContractorEval = async (req, res) =>{
 
 // get contractor
 const getContractorDetails = async (req, res) => {
-  const id = req.params.id || '';
-  const result = await ContractorService.getBySpecificKey('_userId', id);
+  const id = req.params.id;
+  const email = req.body.email;
+  const result = await ContractorService.getContractorDetails(id, email);
   res.status(200).json(result);
 }
 
@@ -37,7 +51,8 @@ const addDocuments = async (req, res) => {
   // const id = req.params.id;
   const body = {
     _userId: req.params.id,
-    name: req.body.name
+    name: req.body.name,
+    email: req.body.email
   }  
   try {
       const file = req.file
@@ -57,9 +72,23 @@ const addDocuments = async (req, res) => {
     }
 }
 
+// EVALUATOR ACCESS =======================================
+// evaluate contractor
+const evaluateContractor = async (req, res) => {
+  try {
+    const result = await ContractorService.evaluateContractor(req.body);
+    res.status(200).json(result);
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({message: 'failed to evaluate please try again'});
+  }
+}
+
 module.exports = {
   getContractorEval,
   updateContractor,
   addDocuments,
-  getContractorDetails
+  getContractorDetails,
+  evaluateContractor,
+  getContractorList
 }
