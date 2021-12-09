@@ -13,7 +13,7 @@ const fileUploadHelper = async (req, res) => {
      const imageUrl = await FTP.uploadJSFTP(file, userId);
      res.status(200).json(imageUrl);
   } catch(er) {
-    console.log(err);
+    console.log(er);
     res.status(400).json({message: 'an error occured during uploading file..'})
   }
 }

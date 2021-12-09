@@ -33,26 +33,50 @@ class ContractorService extends BaseRepository{
     return result;
   }
 
-  // get contractors for evaultion
-  async getContractorEval(from, to){
+  // get contractors for evaluation
+  async getContractorEval(from, to, status){
     console.log(APP, '[getContractorEval]');
+
+    let result = [];
     
-    const result = await this._knex.select('partner.*', 
+    result = this._knex.select('partner.*', 
     'user.firstName', 'user.lastName',
     'user.middleName', 'user.address',
     'user.contactNum', 'user.email')
     .from({partner: this._table})
-    .innerJoin({user: 'USERS_TBL'}, 'partner._userId', '=', 'user.userId')
-    .whereNot({ 'partner.isUpdatedTeam': -1 })
+    .innerJoin({user: 'USERS_TBL'}, 'partner._userId', '=', 'user.userId');
+    
+    if(status == 1)  // for approval
+    result = await result.where({ 'partner.isUpdatedTeam': 1 })
     // .whereBetween('partner.created_at', [from, to])
     // .andWhereNot({ 'partner.isUpdatedTeam': -1 })
-    // .andWhere('partner.status', 1);
+    // if(status == 1)
 
-    return result.map(res=>{
+    if(status == 3) // reviewed but not yet confirmed isUpdate = 2 and status 1
+    {
+      result = await result.where({ 'partner.isUpdatedTeam': 2 })
+              .andWhere({ 'partner.status': 1 })
+    }
+    
+
+    if(status == 2) //confirmed status 2
+    result = await result.where('partner.status', status);
+
+    result = await result.map(res=>{
       res['team'] = JSON.parse(res.team);
       res['documents'] = JSON.parse(res.documents);
+      
+      // if status is appproved show only approved teams
+      if(status == 2) {
+        const approvedTeam = res.team.filter(obj => obj.status == 2);
+        res['team'] =  approvedTeam;
+      }
+      
       return res;
-    })
+    });
+    
+    
+    return result;
                           
   }
 
