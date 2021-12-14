@@ -169,6 +169,36 @@ class ContractorService extends BaseRepository{
     body['team'] = JSON.stringify(body.team);
     return await this.updateBySpecificKey('_email', body._email, body);
   }
+
+
+  // GM ACCESSS
+  // search contractor
+  async searchContractor(body){
+    console.log(APP, '[searchContractor]');
+    
+    try {
+      let result =  await this._knex.select('partner.*', 
+              'user.firstName', 'user.lastName',
+              'user.middleName', 'user.address',
+              'user.contactNum', 'user.email')
+              .from({partner: this._table})
+              .innerJoin({user: 'USERS_TBL'}, 'partner._email', '=', 'user.email')
+              .where(body)
+              .select()
+      result = await result.map(res=>{
+        res['team'] = JSON.parse(res.team);
+        res['documents'] = JSON.parse(res.documents);
+      
+        const approvedTeam = res.team.filter(obj => obj.status == 2);
+        res['team'] =  approvedTeam;
+        return res;
+      });
+      
+      return result;
+    } catch (SQLError) {
+      throw new Error(SQLError);
+    }
+  }
 }
 
 module.exports = new ContractorService;

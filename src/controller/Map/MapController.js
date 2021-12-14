@@ -131,6 +131,18 @@ const siteCount = async (req, res) => {
   const result = await MapServices.siteCountStatus();
   res.status(200).json(result);
 }
+
+
+// General Manager =============================================================
+const approvedSites = async (req, res) => {
+  try {
+    const result = await MapServices.approvedSites();
+    res.status(200).json(result);
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({message: 'error occured'})
+  }   
+}
 // update user
 module.exports = {
   siteList,
@@ -146,5 +158,6 @@ module.exports = {
   siteLegalAssess,
   siteUpdateLegalAssess,
   siteLegalAssessSummary,
-  siteCount
+  siteCount,
+  approvedSites,
 }

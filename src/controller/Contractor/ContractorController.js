@@ -87,11 +87,25 @@ const evaluateContractor = async (req, res) => {
   }
 }
 
+
+// GM ACCESS ================================================
+// search contractor
+const searchContractor = async (req, res) => {
+  try {
+    const result = await ContractorService.searchContractor(req.body);
+    res.status(200).json(result);
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({message: 'failed to search please try again'});
+  }
+}
+
 module.exports = {
   getContractorEval,
   updateContractor,
   addDocuments,
   getContractorDetails,
   evaluateContractor,
-  getContractorList
+  getContractorList,
+  searchContractor
 }

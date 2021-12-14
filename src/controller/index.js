@@ -21,11 +21,13 @@ const {
   addDocuments,
   getContractorDetails,
   evaluateContractor,
-  getContractorList
+  getContractorList,
+  searchContractor
 } = require('./Contractor/ContractorController');
-const { siteList, mySite, addSite, updateSite, removeSite, uploadSite, siteSummary, siteTechEval, siteUpdatetechicalEval, siteTechEvalSummary, siteUpdateLegalAssess, siteLegalAssess, siteLegalAssessSummary, siteCount } = require('./Map/MapController');
+const { siteList, mySite, addSite, updateSite, removeSite, uploadSite, siteSummary, siteTechEval, siteUpdatetechicalEval, siteTechEvalSummary, siteUpdateLegalAssess, siteLegalAssess, siteLegalAssessSummary, siteCount, approvedSites } = require('./Map/MapController');
 const { addMessage, messageList, removeMessages } = require('./Map/MessageController');
 const { fileUploadHelper, fileDeleteHelper } = require('./Helper/HelperController');
+
 
 
 
@@ -48,11 +50,14 @@ module.exports = {
   '/api/register/contractor': insertOrUpdateUser,
   '/api/contractor-evalation/:from/:end': getContractorEval,
   '/api/contractor/list': getContractorList,
+  '/api/contractor/search': searchContractor,
   '/api/contractor/:id/update': updateContractor,
   '/api/contractor/:id/documents': addDocuments,
   '/api/contractor/:id/details': getContractorDetails,
   '/api/contractor/:id/evaluate': evaluateContractor,
   
+
+
   // standard user
   // '/api/test': test,
   '/api/login': login,
@@ -81,6 +86,10 @@ module.exports = {
   '/api/site/legal-assess/:from/:end': siteLegalAssess,
   '/api/site/legal-assess-summary/:from/:end': siteLegalAssessSummary,
 
+  // General Manager
+  '/api/site/gm/approved': approvedSites,
+
+
 
   '/api/site/eval-summary/:from/:end' : siteSummary,
   '/api/site/:id/update': updateSite,
@@ -100,5 +109,7 @@ module.exports = {
   '/api/page/:id/update': pageUserUpdateRole,
   // '/api/page': pageList,
   '/api/page/users': pageUserList,
+
+  
   
 }

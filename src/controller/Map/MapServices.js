@@ -283,5 +283,38 @@ class MapServices extends BaseRepository{
     // .groupBy( 'status' );
   }
 
+
+  // General Manager
+  /**
+   *  get approve sites for GM assignment of teams
+   */
+  async approvedSites(){
+    console.log(APP, '[approvedSites]');
+
+    return await this._knex.select('site.*', 'siteLegal.contracts', 
+    'siteLegal.LCR', 'siteLegal.towerConsPermit', 'siteLegal.fencingPermit',
+    'siteLegal.excavationPermit', 'siteLegal.bldgPermit', 'siteLegal.cenroPermit',
+    'siteLegal.created_at', 'siteLegal.updated_at', 'siteLegal.status',
+    'siteLegal.legalAssessPercent', 'siteLegal.actionRemarks',
+    'siteLegal._actionby', 'siteLegal.action_date',
+
+    this._knex.raw(`(select CONCAT(subemp.firstName," ", subemp.lastName)
+        from USERS_TBL subemp
+          where subemp.userId = site._createdby) as _createdby`),
+
+    this._knex.raw(`(select CONCAT(subemp.firstName," ", subemp.lastName)
+        from USERS_TBL subemp
+          where subemp.userId = siteLegal._legalAssessBy) as _legalAssessBy`),
+    
+    this._knex.raw(`(select CONCAT(subemp.firstName," ", subemp.lastName)
+    from USERS_TBL subemp
+      where subemp.userId = siteLegal._actionby) as _actionby`)
+    )
+      .from({site: this._table})
+      .innerJoin({siteLegal: 'SITE_LEGAL_ASSESS'}, 'site.location', '=', 'siteLegal._location')
+      // .whereBetween(`site.created_at`, [from, to])
+      .where('siteLegal.status', 2);
+  }
+
 }
 module.exports = new MapServices; 
