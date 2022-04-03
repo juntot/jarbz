@@ -134,9 +134,22 @@ const siteCount = async (req, res) => {
 
 
 // General Manager =============================================================
+// get approved sites
 const approvedSites = async (req, res) => {
   try {
     const result = await MapServices.approvedSites();
+    res.status(200).json(result);
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({message: 'error occured'})
+  }   
+}
+
+// asign team partner for site
+const assignTeamPartner = async (req, res) => {
+  const body = req.body;
+  try {
+    const result = await MapServices.assignTeamPartner(body);
     res.status(200).json(result);
   } catch (error) {
     console.log(error);
@@ -160,4 +173,5 @@ module.exports = {
   siteLegalAssessSummary,
   siteCount,
   approvedSites,
+  assignTeamPartner,
 }

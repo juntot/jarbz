@@ -315,6 +315,15 @@ class MapServices extends BaseRepository{
       // .whereBetween(`site.created_at`, [from, to])
       .where('siteLegal.status', 2);
   }
-
+  
+  // assign Team Partner for site
+  async assignTeamPartner(body){
+    console.log(APP, '[assignTeamPartner');
+    
+    await this._knex('SITE_APPROVE').insert(body)
+          .onConflict('_location')
+          .ignore();
+    return body;
+  }
 }
 module.exports = new MapServices; 

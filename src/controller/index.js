@@ -24,7 +24,7 @@ const {
   getContractorList,
   searchContractor
 } = require('./Contractor/ContractorController');
-const { siteList, mySite, addSite, updateSite, removeSite, uploadSite, siteSummary, siteTechEval, siteUpdatetechicalEval, siteTechEvalSummary, siteUpdateLegalAssess, siteLegalAssess, siteLegalAssessSummary, siteCount, approvedSites } = require('./Map/MapController');
+const { siteList, mySite, addSite, updateSite, removeSite, uploadSite, siteSummary, siteTechEval, siteUpdatetechicalEval, siteTechEvalSummary, siteUpdateLegalAssess, siteLegalAssess, siteLegalAssessSummary, siteCount, approvedSites, assignTeamPartner } = require('./Map/MapController');
 const { addMessage, messageList, removeMessages } = require('./Map/MessageController');
 const { fileUploadHelper, fileDeleteHelper } = require('./Helper/HelperController');
 
@@ -88,7 +88,7 @@ module.exports = {
 
   // General Manager
   '/api/site/gm/approved': approvedSites,
-
+  '/api/site/gm/set-team': assignTeamPartner,
 
 
   '/api/site/eval-summary/:from/:end' : siteSummary,
